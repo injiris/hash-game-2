@@ -1,0 +1,17 @@
+<div *ngIf="winner$ | async as winner; else gameBoard">
+  <h2>Winner: {{ winner }}</h2>
+  <button (click)="resetGame()">reset game</button>
+</div>
+<ng-template #gameBoard>
+  <h2>Current Player: {{ currentPlayer$ | async }}</h2>
+  <div class="board">
+    <div *ngFor="let row of board$ | async; let rowIndex = index" class="row">
+      <app-square
+        *ngFor="let cell of row; let colIndex = index"
+        [value]="cell"
+        (move)="playMove(rowIndex, colIndex)"
+      >
+      </app-square>
+    </div>
+  </div>
+</ng-template>
